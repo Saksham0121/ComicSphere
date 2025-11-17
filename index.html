@@ -1,0 +1,1756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ComicVerse Hub - Dynamic Online Comic Store</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #DC3545;
+            --secondary: #1E90FF;
+            --accent-gold: #FFD700;
+            --accent-purple: #9B59B6;
+            --dark-bg: #0F1419;
+            --light-bg: #F8F9FA;
+            --text-dark: #1A1A1A;
+            --text-light: #FFFFFF;
+            --border: #E0E0E0;
+            --success: #28A745;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--text-dark);
+            color: var(--text-light);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--primary);
+            color: var(--text-light);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Hero Carousel */
+        .hero-section {
+            background: linear-gradient(135deg, var(--dark-bg), var(--primary));
+            color: var(--text-light);
+            padding: 3rem 0;
+            margin-bottom: 3rem;
+            border-radius: 0.5rem;
+        }
+
+        .carousel {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 0.5rem;
+        }
+
+        .carousel-slides {
+            display: flex;
+            transition: transform 0.5s ease;
+            min-height: 300px;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(31, 31, 31, 0.9), rgba(220, 53, 69, 0.5));
+            background-size: cover;
+            background-position: center;
+        }
+
+        .carousel-content {
+            text-align: center;
+            z-index: 2;
+        }
+
+        .carousel-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            font-weight: 900;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .carousel-content p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .carousel-btn {
+            background: var(--accent-gold);
+            color: var(--text-dark);
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 2rem;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .carousel-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
+        }
+
+        .carousel-nav {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+            z-index: 10;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            background: var(--accent-gold);
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: var(--text-light);
+            border: none;
+            cursor: pointer;
+            padding: 0.75rem 1rem;
+            font-size: 1.5rem;
+            border-radius: 0.25rem;
+            transition: background 0.3s ease;
+        }
+
+        .carousel-arrow:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .carousel-arrow.prev {
+            left: 1rem;
+        }
+
+        .carousel-arrow.next {
+            right: 1rem;
+        }
+
+        /* Category Sections */
+        .category-section {
+            margin-bottom: 4rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: var(--text-dark);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-header.marvel h2 {
+            color: var(--primary);
+        }
+
+        .section-header.dc h2 {
+            color: var(--secondary);
+        }
+
+        .section-header.anime h2 {
+            color: var(--accent-purple);
+        }
+
+        .section-header.hp h2 {
+            color: #D4AF37;
+        }
+
+        .section-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: bold;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        .section-badge.marvel {
+            background: var(--primary);
+            color: var(--text-light);
+        }
+
+        .section-badge.dc {
+            background: var(--secondary);
+            color: var(--text-light);
+        }
+
+        .section-badge.anime {
+            background: var(--accent-purple);
+            color: var(--text-light);
+        }
+
+        .section-badge.hp {
+            background: #D4AF37;
+            color: var(--text-dark);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Product Card */
+        .product-card {
+            background: var(--text-light);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            background: #111;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: var(--primary);
+            color: var(--text-light);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .product-category {
+            color: var(--secondary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .product-rating {
+            color: var(--accent-gold);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--primary);
+            color: var(--text-light);
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s ease;
+            margin-top: auto;
+        }
+
+        .product-btn:hover {
+            background: var(--secondary);
+        }
+
+        /* Browse Page */
+        .browse-page {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .filters {
+            background: var(--text-light);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+        }
+
+        .filter-group {
+            margin-bottom: 2rem;
+        }
+
+        .filter-group h3 {
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            color: var(--primary);
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .filter-option input {
+            margin-right: 0.5rem;
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+        }
+
+        .filter-option label {
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .sort-group {
+            margin-bottom: 2rem;
+        }
+
+        .sort-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: var(--primary);
+        }
+
+        .sort-group select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 2px solid var(--primary);
+            border-radius: 0.25rem;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        .browse-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .browse-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .browse-header h1 {
+            font-size: 2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: var(--text-dark);
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .view-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--border);
+            background: transparent;
+            cursor: pointer;
+            border-radius: 0.25rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .view-btn.active {
+            background: var(--primary);
+            color: var(--text-light);
+            border-color: var(--primary);
+        }
+
+        .product-list-view {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Detail Page */
+        .detail-page {
+            margin-bottom: 3rem;
+        }
+
+        .detail-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            background: var(--text-light);
+            padding: 2rem;
+            border-radius: 0.5rem;
+        }
+
+        .detail-image {
+            position: relative;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            background: #111;
+        }
+
+        .detail-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .detail-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .detail-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .detail-category {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .detail-rating {
+            color: var(--accent-gold);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .detail-price {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-description {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .detail-meta {
+            margin-bottom: 2rem;
+        }
+
+        .detail-meta-item {
+            margin-bottom: 0.75rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .detail-meta-label {
+            font-weight: bold;
+            min-width: 120px;
+            color: var(--text-dark);
+        }
+
+        .detail-meta-value {
+            color: #666;
+        }
+
+        .detail-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .detail-actions button {
+            flex: 1;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--text-light);
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: var(--text-light);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+        }
+
+        /* Cart Page */
+        .cart-page {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .cart-items {
+            background: var(--text-light);
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-empty {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #999;
+        }
+
+        .cart-empty h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cart-item {
+            display: grid;
+            grid-template-columns: 100px 1fr 100px 100px;
+            gap: 1.5rem;
+            align-items: center;
+            padding: 1.5rem;
+            border: 2px solid var(--border);
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cart-item-image {
+            width: 100px;
+            height: 150px;
+            background: #111;
+            border-radius: 0.25rem;
+            overflow: hidden;
+        }
+
+        .cart-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .cart-item-details h3 {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+
+        .cart-item-price {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border: 1px solid var(--border);
+            background: var(--light-bg);
+            cursor: pointer;
+            border-radius: 0.25rem;
+            font-weight: bold;
+        }
+
+        .quantity-btn:hover {
+            background: var(--border);
+        }
+
+        .remove-btn {
+            background: var(--primary);
+            color: var(--text-light);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            background: #b02a37;
+        }
+
+        .cart-summary {
+            background: var(--text-light);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+            position: sticky;
+            top: 80px;
+        }
+
+        .cart-summary h2 {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .summary-line.total {
+            border-top: 2px solid var(--border);
+            padding-top: 1rem;
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: var(--text-light);
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+            transition: background 0.3s ease;
+        }
+
+        .checkout-btn:hover {
+            background: var(--secondary);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: var(--text-light);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            font-weight: bold;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-gold);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #444;
+            color: #bbb;
+            margin-top: 2rem;
+        }
+
+        /* Success Message */
+        .success-page {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .success-page h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--success);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .success-page p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .success-page button {
+            padding: 1rem 2rem;
+            background: var(--primary);
+            color: var(--text-light);
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .success-page button:hover {
+            background: var(--secondary);
+        }
+
+        /* Hidden Pages */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .browse-page {
+                grid-template-columns: 1fr;
+            }
+
+            .filters {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+
+            .filter-group {
+                margin-bottom: 0;
+            }
+
+            .detail-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .cart-page {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-summary {
+                position: static;
+            }
+
+            .cart-item {
+                grid-template-columns: 80px 1fr;
+                grid-template-rows: auto auto;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .carousel-content h2 {
+                font-size: 1.5rem;
+            }
+
+            .section-header h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 1rem;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .browse-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .detail-title {
+                font-size: 1.8rem;
+            }
+
+            .detail-price {
+                font-size: 1.8rem;
+            }
+
+            .carousel-content h2 {
+                font-size: 1.2rem;
+            }
+
+            .carousel-content p {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo" onclick="navigate('home')">🎭 ComicVerse Hub</div>
+        <ul class="nav-links">
+            <li><a onclick="navigate('home')">Home</a></li>
+            <li><a onclick="navigate('browse')">Browse</a></li>
+            <li><a onclick="navigate('cart')">Cart</a></li>
+        </ul>
+        <div class="cart-icon" onclick="navigate('cart')">
+            🛒
+            <span class="cart-count" id="cart-count">0</span>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home-page" class="page active">
+        <div class="hero-section">
+            <div class="container">
+                <div class="carousel">
+                    <div class="carousel-slides" id="carousel-slides">
+                        <div class="carousel-slide">
+                            <div class="carousel-content">
+                                <h2>🦸 Marvel Legends</h2>
+                                <p>Experience the Ultimate Adventure</p>
+                                <button class="carousel-btn" onclick="navigate('browse')">Shop Now</button>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="carousel-content">
+                                <h2>⚫ DC Universe</h2>
+                                <p>Discover Dark Knight & Wonder Woman</p>
+                                <button class="carousel-btn" onclick="navigate('browse')">Shop Now</button>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="carousel-content">
+                                <h2>🗾 Anime Collection</h2>
+                                <p>Iconic Series & Manga Masters</p>
+                                <button class="carousel-btn" onclick="navigate('browse')">Shop Now</button>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="carousel-content">
+                                <h2>✨ Wizarding World</h2>
+                                <p>Harry Potter & Magical Artifacts</p>
+                                <button class="carousel-btn" onclick="navigate('browse')">Shop Now</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-arrow prev" onclick="carouselPrev()">❮</button>
+                    <button class="carousel-arrow next" onclick="carouselNext()">❯</button>
+                    <div class="carousel-nav" id="carousel-nav"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Sections -->
+        <div class="container">
+            <!-- Marvel Section -->
+            <div class="category-section">
+                <div class="section-header marvel">
+                    <h2>🦸 Marvel</h2>
+                    <span class="section-badge marvel">Popular</span>
+                </div>
+                <div class="product-grid" id="marvel-section"></div>
+            </div>
+
+            <!-- DC Section -->
+            <div class="category-section">
+                <div class="section-header dc">
+                    <h2>⚫ DC Comics</h2>
+                    <span class="section-badge dc">Trending</span>
+                </div>
+                <div class="product-grid" id="dc-section"></div>
+            </div>
+
+            <!-- Anime Section -->
+            <div class="category-section">
+                <div class="section-header anime">
+                    <h2>🗾 Anime</h2>
+                    <span class="section-badge anime">New</span>
+                </div>
+                <div class="product-grid" id="anime-section"></div>
+            </div>
+
+            <!-- Harry Potter Section -->
+            <div class="category-section">
+                <div class="section-header hp">
+                    <h2>✨ Harry Potter</h2>
+                    <span class="section-badge hp">Exclusive</span>
+                </div>
+                <div class="product-grid" id="hp-section"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Browse Page -->
+    <div id="browse-page" class="page">
+        <div class="container">
+            <div class="browse-page">
+                <!-- Filters -->
+                <div class="filters">
+                    <div class="sort-group">
+                        <label>Sort By</label>
+                        <select id="sort-select" onchange="filterAndSort()">
+                            <option value="newest">Newest</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="title-asc">Title: A-Z</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <h3>Category</h3>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat-marvel" onchange="filterAndSort()">
+                            <label for="cat-marvel">Marvel</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat-dc" onchange="filterAndSort()">
+                            <label for="cat-dc">DC</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat-anime" onchange="filterAndSort()">
+                            <label for="cat-anime">Anime</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat-hp" onchange="filterAndSort()">
+                            <label for="cat-hp">Harry Potter</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h3>Price Range</h3>
+                        <div class="filter-option">
+                            <input type="checkbox" id="price-0-25" onchange="filterAndSort()">
+                            <label for="price-0-25">$0 - $25</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="price-25-50" onchange="filterAndSort()">
+                            <label for="price-25-50">$25 - $50</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="price-50-100" onchange="filterAndSort()">
+                            <label for="price-50-100">$50 - $100</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="price-100" onchange="filterAndSort()">
+                            <label for="price-100">$100+</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div class="browse-content">
+                    <div class="browse-header">
+                        <h1>Browse Collection</h1>
+                        <div class="view-toggle">
+                            <button class="view-btn active" onclick="setViewMode('grid', this)">⊞ Grid</button>
+                            <button class="view-btn" onclick="setViewMode('list', this)">☰ List</button>
+                        </div>
+                    </div>
+                    <div class="product-list-view" id="browse-products"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail Page -->
+    <div id="detail-page" class="page">
+        <div class="container">
+            <div class="detail-page">
+                <button onclick="navigate('browse')" style="margin-bottom: 2rem; padding: 0.75rem 1.5rem; background: var(--secondary); color: white; border: none; border-radius: 0.25rem; cursor: pointer; font-weight: bold;">← Back</button>
+                <div class="detail-container" id="detail-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Page -->
+    <div id="cart-page" class="page">
+        <div class="container">
+            <h1 style="font-size: 2rem; font-weight: 900; margin-bottom: 2rem; text-transform: uppercase;">🛒 Shopping Cart</h1>
+            <div class="cart-page">
+                <div class="cart-items" id="cart-items"></div>
+                <div class="cart-summary" id="cart-summary"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Page -->
+    <div id="success-page" class="page">
+        <div class="container">
+            <div class="success-page">
+                <h1>✅ Thank You!</h1>
+                <p>Your simulated order has been placed successfully.</p>
+                <p>Order ID: <strong>#CV-2024-001</strong></p>
+                <button onclick="navigate('home')">Continue Shopping</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About ComicVerse Hub</h3>
+                <p>Your ultimate destination for comics, manga, and pop-culture merchandise from Marvel, DC, Anime, and beyond.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a onclick="navigate('home')">Home</a></li>
+                    <li><a onclick="navigate('browse')">Browse</a></li>
+                    <li><a>About Us</a></li>
+                    <li><a>Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Customer Support</h3>
+                <ul>
+                    <li><a>Help Center</a></li>
+                    <li><a>Shipping Info</a></li>
+                    <li><a>Returns</a></li>
+                    <li><a>FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a>Twitter</a></li>
+                    <li><a>Instagram</a></li>
+                    <li><a>Facebook</a></li>
+                    <li><a>Discord</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 ComicVerse Hub. All rights reserved. | Celebrating Comic Culture Worldwide 🎭</p>
+        </div>
+    </footer>
+
+    <script>
+        // Product Database with online placeholder images including names
+        // Product Database with online cover image links
+        const products = [
+
+    // ⭐ MARVEL
+    {
+        id: 1,
+        title: "The Amazing Spider-Man #1",
+        category: "Marvel",
+        price: 45.99,
+        rating: "★★★★★",
+        image: "https://i.annihil.us/u/prod/marvel/i/mg/6/03/5b7e52bf655fb/clean.jpg",
+        publisher: "Marvel Comics",
+        characters: "Spider-Man",
+        genre: "Superhero",
+        description: "The legendary first appearance of Spider-Man."
+    },
+    {
+        id: 2,
+        title: "X-Men: The Phoenix Saga",
+        category: "Marvel",
+        price: 39.99,
+        rating: "★★★★★",
+        image: "https://i.annihil.us/u/prod/marvel/i/mg/9/03/5702a7fb7cd93/clean.jpg",
+        publisher: "Marvel Comics",
+        characters: "Jean Grey",
+        genre: "Superhero",
+        description: "Jean Grey rises as the Phoenix."
+    },
+    {
+        id: 3,
+        title: "Avengers Assemble",
+        category: "Marvel",
+        price: 49.99,
+        rating: "★★★★☆",
+        image: "https://i.annihil.us/u/prod/marvel/i/mg/3/90/5b7e52bfbdd7b/clean.jpg",
+        publisher: "Marvel Comics",
+        characters: "Iron Man, Thor, Hulk",
+        genre: "Team Adventure",
+        description: "Earth’s mightiest heroes unite."
+    },
+    {
+        id: 4,
+        title: "Thor: Ragnarok",
+        category: "Marvel",
+        price: 35.99,
+        rating: "★★★★★",
+        image: "https://i.annihil.us/u/prod/marvel/i/mg/9/70/55084328e20e1/clean.jpg",
+        publisher: "Marvel Comics",
+        characters: "Thor",
+        genre: "Epic Fantasy",
+        description: "Thor faces the prophecy of Ragnarok."
+    },
+
+    // ⭐ DC COMICS
+    {
+        id: 5,
+        title: "The Dark Knight Returns",
+        category: "DC",
+        price: 55.99,
+        rating: "★★★★★",
+        image: "https://static.dc.com/sites/default/files/DKR_Cv1_0.jpeg",
+        publisher: "DC Comics",
+        characters: "Batman",
+        genre: "Dark Drama",
+        description: "The iconic return of Batman."
+    },
+    {
+        id: 6,
+        title: "Watchmen",
+        category: "DC",
+        price: 52.99,
+        rating: "★★★★★",
+        image: "https://static.dc.com/sites/default/files/Watchmen_Cv1_0.jpg",
+        publisher: "DC Comics",
+        characters: "Rorschach",
+        genre: "Noir",
+        description: "The groundbreaking superhero deconstruction."
+    },
+    {
+        id: 7,
+        title: "Wonder Woman: Gods and Mortals",
+        category: "DC",
+        price: 42.99,
+        rating: "★★★★☆",
+        image: "https://static.dc.com/sites/default/files/imce/2017/05-MAY/WW_GodsAndMortals-01_592dbf1c3452c0.76259508.jpg",
+        publisher: "DC Comics",
+        characters: "Wonder Woman",
+        genre: "Mythology",
+        description: "The ultimate Wonder Woman origin story."
+    },
+    {
+        id: 8,
+        title: "The Flash: Rebirth",
+        category: "DC",
+        price: 38.99,
+        rating: "★★★★☆",
+        image: "https://static.dc.com/sites/default/files/imce/2018/06-JUN/FLSREB_Cv1_5b1a7bb54b9468.34759658.jpeg",
+        publisher: "DC Comics",
+        characters: "Flash",
+        genre: "Adventure",
+        description: "Barry Allen returns as The Flash."
+    },
+
+    // ⭐ ANIME / MANGA (Viz / Kodansha / Shueisha)
+    {
+        id: 9,
+        title: "Naruto: Shippuden Vol 1",
+        category: "Anime",
+        price: 24.99,
+        rating: "★★★★★",
+        image: "https://images-na.ssl-images-amazon.com/images/I/81dFDSrV1gL.jpg",
+        publisher: "Shueisha",
+        characters: "Naruto",
+        genre: "Action Shounen",
+        description: "The start of Naruto's Shippuden era."
+    },
+    {
+        id: 10,
+        title: "One Piece Vol 1",
+        category: "Anime",
+        price: 22.99,
+        rating: "★★★★★",
+        image: "https://images-na.ssl-images-amazon.com/images/I/91pYGWfHUBL.jpg",
+        publisher: "Shueisha",
+        characters: "Luffy",
+        genre: "Adventure",
+        description: "Monkey D. Luffy begins his pirate journey."
+    },
+    {
+        id: 11,
+        title: "Attack on Titan Vol 1",
+        category: "Anime",
+        price: 28.99,
+        rating: "★★★★★",
+        image: "https://m.media-amazon.com/images/I/81r+QohA8FL.jpg",
+        publisher: "Kodansha",
+        characters: "Eren, Mikasa",
+        genre: "Dark Fantasy",
+        description: "Humanity fights the terrifying Titans."
+    },
+    {
+        id: 12,
+        title: "Death Note Vol 1",
+        category: "Anime",
+        price: 26.99,
+        rating: "★★★★★",
+        image: "https://m.media-amazon.com/images/I/71pPp0IadJL.jpg",
+        publisher: "Shueisha",
+        characters: "Light, L",
+        genre: "Thriller",
+        description: "The deadly notebook that can kill anyone."
+    },
+
+    // ⭐ HARRY POTTER (Scholastic / Bloomsbury)
+    {
+        id: 13,
+        title: "Harry Potter: Sorcerer’s Stone",
+        category: "Harry Potter",
+        price: 29.99,
+        rating: "★★★★★",
+        image: "https://m.media-amazon.com/images/I/81Fyh2zEJfL.jpg",
+        publisher: "Bloomsbury",
+        characters: "Harry, Ron, Hermione",
+        genre: "Fantasy",
+        description: "The magical beginning of the saga."
+    },
+    {
+        id: 14,
+        title: "Harry Potter: Chamber of Secrets",
+        category: "Harry Potter",
+        price: 31.99,
+        rating: "★★★★★",
+        image: "https://m.media-amazon.com/images/I/81iqZ2HHD-L.jpg",
+        publisher: "Bloomsbury",
+        characters: "Harry, Tom Riddle",
+        genre: "Fantasy",
+        description: "Dark secrets lie inside the Chamber."
+    },
+    {
+        id: 15,
+        title: "Harry Potter: Prisoner of Azkaban",
+        category: "Harry Potter",
+        price: 33.99,
+        rating: "★★★★★",
+        image: "https://m.media-amazon.com/images/I/81lAPl9Fl0L.jpg",
+        publisher: "Bloomsbury",
+        characters: "Harry, Sirius Black",
+        genre: "Fantasy",
+        description: "A dangerous prisoner escapes Azkaban."
+    },
+    {
+        id: 16,
+        title: "Harry Potter: Goblet of Fire",
+        category: "Harry Potter",
+        price: 35.99,
+        rating: "★★★★★",
+        image: "https://m.media-amazon.com/images/I/91OINeHnJGL.jpg",
+        publisher: "Bloomsbury",
+        characters: "Harry, Voldemort",
+        genre: "Epic Fantasy",
+        description: "The deadly Triwizard Tournament begins."
+    }
+
+];
+
+        let cart = [];
+        let viewMode = 'grid';
+        let currentProductId = null;
+        let carouselIndex = 0;
+        const TOTAL_SLIDES = 4;
+
+        // Initialize
+        function init() {
+            loadCart();
+            updateCartCount();
+            renderHomePage();
+            renderBrowsePage();
+            setupCarousel();
+        }
+
+        // Navigation
+        function navigate(page) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(p => p.classList.remove('active'));
+            document.getElementById(page + '-page').classList.add('active');
+
+            if (page === 'browse') {
+                renderBrowsePage();
+            } else if (page === 'detail') {
+                renderDetailPage();
+            } else if (page === 'cart') {
+                renderCartPage();
+            } else if (page === 'home') {
+                renderHomePage();
+            }
+
+            window.scrollTo(0, 0);
+        }
+
+        // Carousel Functions
+        function setupCarousel() {
+            const carousel = document.getElementById('carousel-nav');
+            carousel.innerHTML = '';
+            for (let i = 0; i < TOTAL_SLIDES; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+                dot.onclick = () => goToSlide(i);
+                carousel.appendChild(dot);
+            }
+            goToSlide(0);
+        }
+
+        function carouselPrev() {
+            carouselIndex = (carouselIndex - 1 + TOTAL_SLIDES) % TOTAL_SLIDES;
+            goToSlide(carouselIndex);
+        }
+
+        function carouselNext() {
+            carouselIndex = (carouselIndex + 1) % TOTAL_SLIDES;
+            goToSlide(carouselIndex);
+        }
+
+        function goToSlide(index) {
+            carouselIndex = index;
+            const slides = document.getElementById('carousel-slides');
+            slides.style.transform = `translateX(-${index * 100}%)`;
+            document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
+
+        // Render Functions
+        function renderHomePage() {
+            const categories = ['Marvel', 'DC', 'Anime', 'Harry Potter'];
+            const categoryIds = ['marvel-section', 'dc-section', 'anime-section', 'hp-section'];
+
+            categories.forEach((cat, idx) => {
+                const section = document.getElementById(categoryIds[idx]);
+                const categoryProducts = products.filter(p => p.category === cat).slice(0, 4);
+                section.innerHTML = categoryProducts.map(p => createProductCard(p)).join('');
+            });
+        }
+
+        function createProductCard(product) {
+            return `
+                <div class="product-card" onclick="showDetail(${product.id})">
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.title}">
+                        <div class="product-badge">Popular</div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">${product.category}</p>
+                        <h3 class="product-title">${product.title}</h3>
+                        <div class="product-rating">${product.rating}</div>
+                        <div class="product-price">$${product.price}</div>
+                        <button class="product-btn" onclick="event.stopPropagation(); addToCart(${product.id})">Add to Cart</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderBrowsePage() {
+            const filtered = filterProducts();
+            const sortedProducts = sortProducts(filtered);
+            const browseProducts = document.getElementById('browse-products');
+            browseProducts.innerHTML = sortedProducts.map(p => createProductCard(p)).join('');
+
+            // Apply view mode layout
+            if (viewMode === 'list') {
+                browseProducts.style.gridTemplateColumns = '1fr';
+            } else {
+                browseProducts.style.gridTemplateColumns = '';
+            }
+        }
+
+        function filterProducts() {
+            let filtered = [...products];
+
+            const categories = ['marvel', 'dc', 'anime', 'hp'];
+            const selectedCategories = categories.filter(cat => document.getElementById(`cat-${cat}`).checked);
+            if (selectedCategories.length > 0) {
+                const categoryMap = { marvel: 'Marvel', dc: 'DC', anime: 'Anime', hp: 'Harry Potter' };
+                filtered = filtered.filter(p => selectedCategories.map(c => categoryMap[c]).includes(p.category));
+            }
+
+            const priceRanges = [];
+            if (document.getElementById('price-0-25').checked) priceRanges.push([0, 25]);
+            if (document.getElementById('price-25-50').checked) priceRanges.push([25, 50]);
+            if (document.getElementById('price-50-100').checked) priceRanges.push([50, 100]);
+            if (document.getElementById('price-100').checked) priceRanges.push([100, Infinity]);
+
+            if (priceRanges.length > 0) {
+                filtered = filtered.filter(p => priceRanges.some(r => p.price >= r[0] && p.price <= r[1]));
+            }
+
+            return filtered;
+        }
+
+        function sortProducts(productsToSort) {
+            const sorted = [...productsToSort];
+            const sortBy = document.getElementById('sort-select').value;
+
+            switch (sortBy) {
+                case 'price-low':
+                    sorted.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    sorted.sort((a, b) => b.price - a.price);
+                    break;
+                case 'title-asc':
+                    sorted.sort((a, b) => a.title.localeCompare(b.title));
+                    break;
+                case 'newest':
+                default:
+                    sorted.sort((a, b) => b.id - a.id);
+            }
+            return sorted;
+        }
+
+        function filterAndSort() {
+            renderBrowsePage();
+        }
+
+        function setViewMode(mode, btn) {
+            viewMode = mode;
+            document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderBrowsePage();
+        }
+
+        function showDetail(productId) {
+            currentProductId = productId;
+            navigate('detail');
+        }
+
+        function renderDetailPage() {
+            const product = products.find(p => p.id === currentProductId);
+            if (!product) return;
+
+            const container = document.getElementById('detail-container');
+            container.innerHTML = `
+                <div class="detail-image">
+                    <img src="${product.image}" alt="${product.title}">
+                </div>
+                <div class="detail-info">
+                    <p class="detail-category">${product.category}</p>
+                    <h1 class="detail-title">${product.title}</h1>
+                    <div class="detail-rating">${product.rating} (128 reviews)</div>
+                    <div class="detail-price">$${product.price}</div>
+                    
+                    <div class="detail-description">
+                        ${product.description}
+                    </div>
+
+                    <div class="detail-meta">
+                        <div class="detail-meta-item">
+                            <span class="detail-meta-label">Publisher:</span>
+                            <span class="detail-meta-value">${product.publisher}</span>
+                        </div>
+                        <div class="detail-meta-item">
+                            <span class="detail-meta-label">Characters:</span>
+                            <span class="detail-meta-value">${product.characters}</span>
+                        </div>
+                        <div class="detail-meta-item">
+                            <span class="detail-meta-label">Genre:</span>
+                            <span class="detail-meta-value">${product.genre}</span>
+                        </div>
+                    </div>
+
+                    <div class="detail-actions">
+                        <button class="btn-primary" onclick="addToCart(${product.id}); showAddedMessage();">Add to Cart</button>
+                        <button class="btn-secondary" onclick="navigate('browse')">Continue Shopping</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showAddedMessage() {
+            alert('✅ Added to cart!');
+        }
+
+        // Cart Functions
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            saveCart();
+            updateCartCount();
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            saveCart();
+            updateCartCount();
+            renderCartPage();
+        }
+
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    saveCart();
+                    renderCartPage();
+                }
+            }
+        }
+
+        function renderCartPage() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartSummaryContainer = document.getElementById('cart-summary');
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<div class="cart-empty"><h2>Your cart is empty</h2><p>Start shopping and add items to your cart!</p></div>';
+                cartSummaryContainer.innerHTML = '<h2>Order Summary</h2><div class="summary-line"><span>Total:</span><span>$0.00</span></div>';
+                return;
+            }
+
+            cartItemsContainer.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div class="cart-item-image">
+                        <img src="${item.image}" alt="${item.title}">
+                    </div>
+                    <div class="cart-item-details">
+                        <h3>${item.title}</h3>
+                        <p class="cart-item-price">$${item.price}</p>
+                    </div>
+                    <div class="quantity-control">
+                        <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">−</button>
+                        <span>${item.quantity}</span>
+                        <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                    </div>
+                    <button class="remove-btn" onclick="removeFromCart(${item.id})">Remove</button>
+                </div>
+            `).join('');
+
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const tax = subtotal * 0.1;
+            const total = subtotal + tax;
+
+            cartSummaryContainer.innerHTML = `
+                <h2>Order Summary</h2>
+                <div class="summary-line">
+                    <span>Subtotal:</span>
+                    <span>$${subtotal.toFixed(2)}</span>
+                </div>
+                <div class="summary-line">
+                    <span>Tax (10%):</span>
+                    <span>$${tax.toFixed(2)}</span>
+                </div>
+                <div class="summary-line">
+                    <span>Shipping:</span>
+                    <span>Free</span>
+                </div>
+                <div class="summary-line total">
+                    <span>Total:</span>
+                    <span>$${total.toFixed(2)}</span>
+                </div>
+                <button class="checkout-btn" onclick="checkout()">Checkout</button>
+            `;
+        }
+
+        function checkout() {
+            cart = [];
+            saveCart();
+            updateCartCount();
+            navigate('success');
+        }
+
+        function updateCartCount() {
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-count').textContent = count;
+        }
+
+        // LocalStorage Functions
+        function saveCart() {
+            localStorage.setItem('comicverse-cart', JSON.stringify(cart));
+        }
+
+        function loadCart() {
+            const saved = localStorage.getItem('comicverse-cart');
+            cart = saved ? JSON.parse(saved) : [];
+        }
+
+        // Start
+        init();
+    </script>
+</body>
+</html>
