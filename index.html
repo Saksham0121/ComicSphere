@@ -994,35 +994,45 @@
             <div class="container">
                 <div class="carousel">
                     <div class="carousel-slides" id="carousel-slides">
-                        <div class="carousel-slide">
+
+                        <!-- MARVEL -->
+                        <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1608889175123-8ee362201f81?w=1600&auto=format&fit=crop&q=80');">
                             <div class="carousel-content">
                                 <h2>🦸 Marvel Legends</h2>
                                 <p>Experience the Ultimate Adventure</p>
                                 <button class="carousel-btn" onclick="navigate('browse')">Shop Now</button>
                             </div>
                         </div>
-                        <div class="carousel-slide">
+
+                        <!-- DC -->
+                        <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1531259683007-016a7b628fc3?w=1600&auto=format&fit=crop&q=80');">
                             <div class="carousel-content">
                                 <h2>⚫ DC Universe</h2>
                                 <p>Discover Dark Knight & Wonder Woman</p>
                                 <button class="carousel-btn" onclick="navigate('browse')">Shop Now</button>
                             </div>
                         </div>
-                        <div class="carousel-slide">
+
+                        <!-- ANIME -->
+                        <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1578632767115-351597cf2477?w=1600&auto=format&fit=crop&q=80');">
                             <div class="carousel-content">
                                 <h2>🗾 Anime Collection</h2>
                                 <p>Iconic Series & Manga Masters</p>
                                 <button class="carousel-btn" onclick="navigate('browse')">Shop Now</button>
                             </div>
                         </div>
-                        <div class="carousel-slide">
+
+                        <!-- HARRY POTTER -->
+                        <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1621351183012-e2f9972dd9bf?w=1600&auto=format&fit=crop&q=80');">
                             <div class="carousel-content">
                                 <h2>✨ Wizarding World</h2>
                                 <p>Harry Potter & Magical Artifacts</p>
                                 <button class="carousel-btn" onclick="navigate('browse')">Shop Now</button>
                             </div>
                         </div>
+
                     </div>
+
                     <button class="carousel-arrow prev" onclick="carouselPrev()">❮</button>
                     <button class="carousel-arrow next" onclick="carouselNext()">❯</button>
                     <div class="carousel-nav" id="carousel-nav"></div>
@@ -1219,208 +1229,300 @@
         // Product Database with online placeholder images including names
         // Product Database with online cover image links
         const products = [
+            // Marvel Comics
+            {
+                id: 1,
+                title: "The Avengers: Infinity Saga",
+                category: "Marvel",
+                publisher: "Marvel Comics",
+                price: 24.99,
+                image: "https://images.unsplash.com/photo-1608889175123-8ee362201f81?w=400&auto=format&fit=crop&q=80",
+                description: "The epic culmination of the Infinity Saga where Earth's Mightiest Heroes face their greatest threat yet - Thanos and the Infinity Stones.",
+                releaseDate: "2024-01-15",
+                characters: "Iron Man, Captain America, Thor, Hulk, Black Widow",
+                genre: "Action, Adventure, Superhero",
+                rating: "★★★★★",
+            },
+            {
+                id: 2,
+                title: "Spider-Man: Web of Shadows",
+                category: "Marvel",
+                publisher: "Marvel Comics",
+                price: 19.99,
+                image: "https://images.unsplash.com/photo-1635805737707-575885ab0820?w=400&auto=format&fit=crop&q=80",
+                description: "Peter Parker faces his darkest hour as symbiote invasion threatens New York City. A gripping tale of heroism and sacrifice.",
+                releaseDate: "2024-02-10",
+                characters: "Spider-Man, Mary Jane, Venom",
+                genre: "Action, Mystery, Superhero",
+                rating: "★★★★☆",
+            },
+            {
+                id: 3,
+                title: "Black Panther: Wakanda Forever",
+                category: "Marvel",
+                publisher: "Marvel Comics",
+                price: 22.99,
+                image: "https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=400&auto=format&fit=crop&q=80",
+                description: "T'Challa protects Wakanda from new threats while exploring the mystical origins of vibranium and ancient Wakandan legends.",
+                releaseDate: "2023-11-20",
+                characters: "Black Panther, Shuri, Okoye",
+                genre: "Action, Sci-Fi, Adventure",
+                rating: "★★★★★",
+            },
+            {
+                id: 4,
+                title: "X-Men: Days of Future Past",
+                category: "Marvel",
+                publisher: "Marvel Comics",
+                price: 21.99,
+                image: "https://images.unsplash.com/photo-1601645191163-3fc0d5d64e35?w=400&auto=format&fit=crop&q=80",
+                description: "Wolverine travels back in time to prevent a dystopian future where mutants are hunted by Sentinels.",
+                releaseDate: "2023-12-05",
+                characters: "Wolverine, Professor X, Magneto, Mystique",
+                genre: "Sci-Fi, Action, Time Travel",
+                rating: "★★★★☆",
+            },
+            {
+                id: 5,
+                title: "Captain Marvel: Higher, Further, Faster",
+                category: "Marvel",
+                publisher: "Marvel Comics",
+                price: 20.99,
+                image: "https://images.unsplash.com/photo-1543060478-4f3f0b1f0b1b?w=400&auto=format&fit=crop&q=80",
+                description: "Carol Danvers embraces her full cosmic powers while uncovering secrets about the Kree-Skrull war.",
+                releaseDate: "2024-03-12",
+                characters: "Captain Marvel, Nick Fury, Talos",
+                genre: "Sci-Fi, Action, Space Opera",
+                rating: "★★★★☆",
+            },
 
-    // ⭐ MARVEL
-    {
-        id: 1,
-        title: "The Amazing Spider-Man #1",
-        category: "Marvel",
-        price: 45.99,
-        rating: "★★★★★",
-        image: "https://i.annihil.us/u/prod/marvel/i/mg/6/03/5b7e52bf655fb/clean.jpg",
-        publisher: "Marvel Comics",
-        characters: "Spider-Man",
-        genre: "Superhero",
-        description: "The legendary first appearance of Spider-Man."
-    },
-    {
-        id: 2,
-        title: "X-Men: The Phoenix Saga",
-        category: "Marvel",
-        price: 39.99,
-        rating: "★★★★★",
-        image: "https://i.annihil.us/u/prod/marvel/i/mg/9/03/5702a7fb7cd93/clean.jpg",
-        publisher: "Marvel Comics",
-        characters: "Jean Grey",
-        genre: "Superhero",
-        description: "Jean Grey rises as the Phoenix."
-    },
-    {
-        id: 3,
-        title: "Avengers Assemble",
-        category: "Marvel",
-        price: 49.99,
-        rating: "★★★★☆",
-        image: "https://i.annihil.us/u/prod/marvel/i/mg/3/90/5b7e52bfbdd7b/clean.jpg",
-        publisher: "Marvel Comics",
-        characters: "Iron Man, Thor, Hulk",
-        genre: "Team Adventure",
-        description: "Earth’s mightiest heroes unite."
-    },
-    {
-        id: 4,
-        title: "Thor: Ragnarok",
-        category: "Marvel",
-        price: 35.99,
-        rating: "★★★★★",
-        image: "https://i.annihil.us/u/prod/marvel/i/mg/9/70/55084328e20e1/clean.jpg",
-        publisher: "Marvel Comics",
-        characters: "Thor",
-        genre: "Epic Fantasy",
-        description: "Thor faces the prophecy of Ragnarok."
-    },
+            // DC Comics
+            {
+                id: 6,
+                title: "Batman: The Dark Knight Returns",
+                category: "DC",
+                publisher: "DC Comics",
+                price: 26.99,
+                image: "https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=400&auto=format&fit=crop&q=80",
+                description: "An aging Batman returns from retirement to save Gotham City from chaos. A dark, gritty masterpiece of superhero storytelling.",
+                releaseDate: "2023-10-15",
+                characters: "Batman, Robin, Joker, Superman",
+                genre: "Action, Crime, Noir",
+                rating: "★★★★★",
+            },
+            {
+                id: 7,
+                title: "Justice League: Crisis on Infinite Earths",
+                category: "DC",
+                publisher: "DC Comics",
+                price: 28.99,
+                image: "https://images.unsplash.com/photo-1531259683007-016a7b628fc3?w=400&auto=format&fit=crop&q=80",
+                description: "The multiverse hangs in the balance as the Justice League faces the Anti-Monitor in the ultimate crisis.",
+                releaseDate: "2024-01-20",
+                characters: "Superman, Batman, Wonder Woman, Flash, Green Lantern",
+                genre: "Action, Sci-Fi, Epic",
+                rating: "★★★★★",
+            },
+            {
+                id: 8,
+                title: "Wonder Woman: Gods and Mortals",
+                category: "DC",
+                publisher: "DC Comics",
+                price: 23.99,
+                image: "https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=400&auto=format&fit=crop&q=80",
+                description: "Diana Prince navigates both the world of gods and humanity, fighting for truth and justice against ancient evils.",
+                releaseDate: "2023-11-30",
+                characters: "Wonder Woman, Ares, Hippolyta",
+                genre: "Fantasy, Action, Mythology",
+                rating: "★★★★☆",
+            },
+            {
+                id: 9,
+                title: "The Flash: Flashpoint",
+                category: "DC",
+                publisher: "DC Comics",
+                price: 24.99,
+                image: "https://images.unsplash.com/photo-1608889825205-eebdb9fc5806?w=400&auto=format&fit=crop&q=80",
+                description: "Barry Allen alters the timeline to save his mother, creating a dark alternate reality where heroes become villains.",
+                releaseDate: "2024-02-25",
+                characters: "The Flash, Batman, Superman",
+                genre: "Sci-Fi, Time Travel, Action",
+                rating: "★★★★★",
+            },
+            {
+                id: 10,
+                title: "Aquaman: Throne of Atlantis",
+                category: "DC",
+                publisher: "DC Comics",
+                price: 22.99,
+                image: "https://images.unsplash.com/photo-1608889476518-738c9b1c0b5e?w=400&auto=format&fit=crop&q=80",
+                description: "Arthur Curry must choose between surface world and his underwater kingdom when war threatens both.",
+                releaseDate: "2023-12-18",
+                characters: "Aquaman, Mera, Black Manta",
+                genre: "Fantasy, Action, Adventure",
+                rating: "★★★★☆",
+            },
 
-    // ⭐ DC COMICS
-    {
-        id: 5,
-        title: "The Dark Knight Returns",
-        category: "DC",
-        price: 55.99,
-        rating: "★★★★★",
-        image: "https://static.dc.com/sites/default/files/DKR_Cv1_0.jpeg",
-        publisher: "DC Comics",
-        characters: "Batman",
-        genre: "Dark Drama",
-        description: "The iconic return of Batman."
-    },
-    {
-        id: 6,
-        title: "Watchmen",
-        category: "DC",
-        price: 52.99,
-        rating: "★★★★★",
-        image: "https://static.dc.com/sites/default/files/Watchmen_Cv1_0.jpg",
-        publisher: "DC Comics",
-        characters: "Rorschach",
-        genre: "Noir",
-        description: "The groundbreaking superhero deconstruction."
-    },
-    {
-        id: 7,
-        title: "Wonder Woman: Gods and Mortals",
-        category: "DC",
-        price: 42.99,
-        rating: "★★★★☆",
-        image: "https://static.dc.com/sites/default/files/imce/2017/05-MAY/WW_GodsAndMortals-01_592dbf1c3452c0.76259508.jpg",
-        publisher: "DC Comics",
-        characters: "Wonder Woman",
-        genre: "Mythology",
-        description: "The ultimate Wonder Woman origin story."
-    },
-    {
-        id: 8,
-        title: "The Flash: Rebirth",
-        category: "DC",
-        price: 38.99,
-        rating: "★★★★☆",
-        image: "https://static.dc.com/sites/default/files/imce/2018/06-JUN/FLSREB_Cv1_5b1a7bb54b9468.34759658.jpeg",
-        publisher: "DC Comics",
-        characters: "Flash",
-        genre: "Adventure",
-        description: "Barry Allen returns as The Flash."
-    },
+            // Anime
+            {
+                id: 11,
+                title: "Attack on Titan: Final Season",
+                category: "Anime",
+                publisher: "Kodansha",
+                price: 18.99,
+                image: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=400&auto=format&fit=crop&q=80",
+                description: "The truth behind the Titans is revealed as Eren leads humanity in its final battle for freedom.",
+                releaseDate: "2024-01-10",
+                characters: "Eren Yeager, Mikasa, Armin, Levi",
+                genre: "Action, Dark Fantasy, Military",
+                rating: "★★★★★",
+            },
+            {
+                id: 12,
+                title: "My Hero Academia: Heroes Rising",
+                category: "Anime",
+                publisher: "Shueisha",
+                price: 17.99,
+                image: "https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=400&auto=format&fit=crop&q=80",
+                description: "Class 1-A faces their toughest challenge yet when a villain threatens to destroy everything they've worked for.",
+                releaseDate: "2023-11-15",
+                characters: "Deku, Bakugo, All Might, Todoroki",
+                genre: "Action, Superhero, Coming of Age",
+                rating: "★★★★☆",
+            },
+            {
+                id: 13,
+                title: "Demon Slayer: Infinity Castle",
+                category: "Anime",
+                publisher: "Shueisha",
+                price: 19.99,
+                image: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=400&auto=format&fit=crop&q=80",
+                description: "Tanjiro and the Demon Slayer Corps infiltrate Muzan's Infinity Castle for the final confrontation.",
+                releaseDate: "2024-03-05",
+                characters: "Tanjiro, Nezuko, Zenitsu, Inosuke",
+                genre: "Action, Dark Fantasy, Supernatural",
+                rating: "★★★★★",
+            },
+            {
+                id: 14,
+                title: "One Piece: Wano Country",
+                category: "Anime",
+                publisher: "Shueisha",
+                price: 16.99,
+                image: "https://images.unsplash.com/photo-1618519764620-7403abdbdfe9?w=400&auto=format&fit=crop&q=80",
+                description: "The Straw Hat Pirates ally with samurai to liberate Wano from the tyrannical rule of Kaido.",
+                releaseDate: "2024-02-15",
+                characters: "Luffy, Zoro, Nami, Sanji",
+                genre: "Adventure, Fantasy, Action",
+                rating: "★★★★☆",
+            },
+            {
+                id: 15,
+                title: "Jujutsu Kaisen: Shibuya Incident",
+                category: "Anime",
+                publisher: "Shueisha",
+                price: 18.99,
+                image: "https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=400&auto=format&fit=crop&q=80",
+                description: "Halloween night in Shibuya becomes a nightmare as cursed spirits launch a devastating attack.",
+                releaseDate: "2023-12-20",
+                characters: "Yuji Itadori, Satoru Gojo, Megumi, Nobara",
+                genre: "Action, Supernatural, Dark Fantasy",
+                rating: "★★★★★",
+            },
 
-    // ⭐ ANIME / MANGA (Viz / Kodansha / Shueisha)
-    {
-        id: 9,
-        title: "Naruto: Shippuden Vol 1",
-        category: "Anime",
-        price: 24.99,
-        rating: "★★★★★",
-        image: "https://images-na.ssl-images-amazon.com/images/I/81dFDSrV1gL.jpg",
-        publisher: "Shueisha",
-        characters: "Naruto",
-        genre: "Action Shounen",
-        description: "The start of Naruto's Shippuden era."
-    },
-    {
-        id: 10,
-        title: "One Piece Vol 1",
-        category: "Anime",
-        price: 22.99,
-        rating: "★★★★★",
-        image: "https://images-na.ssl-images-amazon.com/images/I/91pYGWfHUBL.jpg",
-        publisher: "Shueisha",
-        characters: "Luffy",
-        genre: "Adventure",
-        description: "Monkey D. Luffy begins his pirate journey."
-    },
-    {
-        id: 11,
-        title: "Attack on Titan Vol 1",
-        category: "Anime",
-        price: 28.99,
-        rating: "★★★★★",
-        image: "https://m.media-amazon.com/images/I/81r+QohA8FL.jpg",
-        publisher: "Kodansha",
-        characters: "Eren, Mikasa",
-        genre: "Dark Fantasy",
-        description: "Humanity fights the terrifying Titans."
-    },
-    {
-        id: 12,
-        title: "Death Note Vol 1",
-        category: "Anime",
-        price: 26.99,
-        rating: "★★★★★",
-        image: "https://m.media-amazon.com/images/I/71pPp0IadJL.jpg",
-        publisher: "Shueisha",
-        characters: "Light, L",
-        genre: "Thriller",
-        description: "The deadly notebook that can kill anyone."
-    },
-
-    // ⭐ HARRY POTTER (Scholastic / Bloomsbury)
-    {
-        id: 13,
-        title: "Harry Potter: Sorcerer’s Stone",
-        category: "Harry Potter",
-        price: 29.99,
-        rating: "★★★★★",
-        image: "https://m.media-amazon.com/images/I/81Fyh2zEJfL.jpg",
-        publisher: "Bloomsbury",
-        characters: "Harry, Ron, Hermione",
-        genre: "Fantasy",
-        description: "The magical beginning of the saga."
-    },
-    {
-        id: 14,
-        title: "Harry Potter: Chamber of Secrets",
-        category: "Harry Potter",
-        price: 31.99,
-        rating: "★★★★★",
-        image: "https://m.media-amazon.com/images/I/81iqZ2HHD-L.jpg",
-        publisher: "Bloomsbury",
-        characters: "Harry, Tom Riddle",
-        genre: "Fantasy",
-        description: "Dark secrets lie inside the Chamber."
-    },
-    {
-        id: 15,
-        title: "Harry Potter: Prisoner of Azkaban",
-        category: "Harry Potter",
-        price: 33.99,
-        rating: "★★★★★",
-        image: "https://m.media-amazon.com/images/I/81lAPl9Fl0L.jpg",
-        publisher: "Bloomsbury",
-        characters: "Harry, Sirius Black",
-        genre: "Fantasy",
-        description: "A dangerous prisoner escapes Azkaban."
-    },
-    {
-        id: 16,
-        title: "Harry Potter: Goblet of Fire",
-        category: "Harry Potter",
-        price: 35.99,
-        rating: "★★★★★",
-        image: "https://m.media-amazon.com/images/I/91OINeHnJGL.jpg",
-        publisher: "Bloomsbury",
-        characters: "Harry, Voldemort",
-        genre: "Epic Fantasy",
-        description: "The deadly Triwizard Tournament begins."
-    }
-
-];
+            // Harry Potter
+            {
+                id: 16,
+                title: "Harry Potter and the Sorcerer's Stone",
+                category: "Harry Potter",
+                publisher: "Bloomsbury",
+                price: 25.99,
+                image: "https://images.unsplash.com/photo-1621351183012-e2f9972dd9bf?w=400&auto=format&fit=crop&q=80",
+                description: "Follow Harry's magical journey as he discovers he's a wizard and enters Hogwarts School of Witchcraft and Wizardry.",
+                releaseDate: "2023-09-01",
+                characters: "Harry Potter, Hermione Granger, Ron Weasley, Dumbledore",
+                genre: "Fantasy, Adventure, Magic",
+                rating: "★★★★★",
+            },
+            {
+                id: 17,
+                title: "Harry Potter and the Chamber of Secrets",
+                category: "Harry Potter",
+                publisher: "Bloomsbury",
+                price: 25.99,
+                image: "https://images.unsplash.com/photo-1618519764620-7403abdbdfe9?w=400&auto=format&fit=crop&q=80",
+                description: "A mysterious chamber has been opened at Hogwarts, and dark forces threaten muggle-born students.",
+                releaseDate: "2023-10-05",
+                characters: "Harry Potter, Hermione Granger, Ron Weasley, Dobby",
+                genre: "Fantasy, Mystery, Adventure",
+                rating: "★★★★★",
+            },
+            {
+                id: 18,
+                title: "Harry Potter and the Prisoner of Azkaban",
+                category: "Harry Potter",
+                publisher: "Bloomsbury",
+                price: 26.99,
+                image: "https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400&auto=format&fit=crop&q=80",
+                description: "Sirius Black has escaped from Azkaban, and Harry must uncover the truth about his parents' past.",
+                releaseDate: "2023-11-10",
+                characters: "Harry Potter, Sirius Black, Remus Lupin, Peter Pettigrew",
+                genre: "Fantasy, Mystery, Adventure",
+                rating: "★★★★★",
+            },
+            {
+                id: 19,
+                title: "Harry Potter and the Goblet of Fire",
+                category: "Harry Potter",
+                publisher: "Bloomsbury",
+                price: 27.99,
+                image: "https://images.unsplash.com/photo-1589998059171-988d887df646?w=400&auto=format&fit=crop&q=80",
+                description: "Harry competes in the dangerous Triwizard Tournament while dark forces conspire to bring Voldemort back.",
+                releaseDate: "2024-01-08",
+                characters: "Harry Potter, Hermione Granger, Ron Weasley, Cedric Diggory",
+                genre: "Fantasy, Action, Tournament",
+                rating: "★★★★★",
+            },
+            {
+                id: 20,
+                title: "Harry Potter and the Order of the Phoenix",
+                category: "Harry Potter",
+                publisher: "Bloomsbury",
+                price: 28.99,
+                image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&auto=format&fit=crop&q=80",
+                description: "Harry forms Dumbledore's Army as the Ministry of Magic refuses to believe Voldemort has returned.",
+                releaseDate: "2024-02-20",
+                characters: "Harry Potter, Hermione Granger, Ron Weasley, Luna Lovegood",
+                genre: "Fantasy, Action, Rebellion",
+                rating: "★★★★☆",
+            },
+            {
+                id: 21,
+                title: "Fantastic Beasts and Where to Find Them",
+                category: "Harry Potter",
+                publisher: "Bloomsbury",
+                price: 23.99,
+                image: "https://images.unsplash.com/photo-1618556658017-54e94f1c08e6?w=400&auto=format&fit=crop&q=80",
+                description: "Newt Scamander arrives in New York with a case full of magical creatures, leading to unexpected adventures.",
+                releaseDate: "2023-12-15",
+                characters: "Newt Scamander, Tina Goldstein, Jacob Kowalski, Queenie Goldstein",
+                genre: "Fantasy, Adventure, Magic",
+                rating: "★★★★☆",
+            },
+            {
+                id: 22,
+                title: "The Tales of Beedle the Bard",
+                category: "Harry Potter",
+                publisher: "Bloomsbury",
+                price: 21.99,
+                image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&auto=format&fit=crop&q=80",
+                description: "A collection of wizarding fairy tales that have delighted generations of magical folk.",
+                releaseDate: "2023-11-01",
+                characters: "Various",
+                genre: "Fantasy, Fairy Tales, Magic",
+                rating: "★★★★☆",
+            },
+            ];
 
         let cart = [];
         let viewMode = 'grid';
